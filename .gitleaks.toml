@@ -1,0 +1,10 @@
+[extend]
+useDefault = true
+
+[[rules]]
+id = "test-secret"
+description = "Detect test secrets used to validate the CI security gate"
+regex = '''SECURE_CICD_TEST_SECRET_[A-Za-z0-9]{20,}'''
+keywords = [
+    "SECURE_CICD_TEST_SECRET_"
+]
