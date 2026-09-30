@@ -98,6 +98,9 @@ jobs:
           cache: maven
           cache-dependency-path: backend/pom.xml
 
+      - name: Make Maven wrapper executable
+        run: chmod +x mvnw
+
       - name: Run OWASP Dependency-Check
         run: |
           ./mvnw org.owasp:dependency-check-maven:check \
