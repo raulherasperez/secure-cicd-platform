@@ -1,17 +1,13 @@
 rules:
-  - id: java-runtime-exec-user-input
+  - id: java-dangerous-runtime-exec
     languages:
       - java
+
     message: >
-      Potential command injection: untrusted input is passed to
-      Runtime.exec().
+      Dangerous command execution detected. Runtime.exec() can lead
+      to command injection when used with untrusted input.
+
     severity: ERROR
 
-    mode: taint
-
-    pattern-sources:
-      - pattern: |
-          @RequestParam $TYPE $VAR
-
-    pattern-sinks:
-      - pattern: Runtime.getRuntime().exec($VAR)
+    patterns:
+      - pattern: Runtime.getRuntime().exec(...)
