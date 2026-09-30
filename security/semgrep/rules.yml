@@ -1,0 +1,13 @@
+rules:
+  - id: java-dangerous-runtime-exec
+    languages:
+      - java
+
+    message: >
+      Dangerous command execution detected. Runtime.exec() can lead
+      to command injection when used with untrusted input.
+
+    severity: ERROR
+
+    patterns:
+      - pattern: Runtime.getRuntime().exec(...)
