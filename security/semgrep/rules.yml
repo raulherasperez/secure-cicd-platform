@@ -1,0 +1,17 @@
+rules:
+  - id: java-runtime-exec-user-input
+    languages:
+      - java
+    message: >
+      Potential command injection: untrusted input is passed to
+      Runtime.exec().
+    severity: ERROR
+
+    mode: taint
+
+    pattern-sources:
+      - pattern: |
+          @RequestParam $TYPE $VAR
+
+    pattern-sinks:
+      - pattern: Runtime.getRuntime().exec($VAR)
