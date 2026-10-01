@@ -125,3 +125,22 @@ jobs:
         with:
           name: dependency-check-report
           path: backend/target/dependency-check-report.*
+  container-scan:
+    name: Container Scan - Trivy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t secure-cicd-api:${{ github.sha }} ./backend
+
+      - name: Scan Docker image with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'secure-cicd-api:${{ github.sha }}'
+          format: 'table'
+          exit-code: '1'
+          severity: 'HIGH,CRITICAL'
+          ignore-unfixed: true
