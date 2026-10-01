@@ -19,6 +19,10 @@ FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN useradd --system --uid 1001 spring
 
 COPY --from=build /app/target/*.jar app.jar
